@@ -5,7 +5,7 @@ import requests
 from bs4.element import Comment
 
 def getLeaderPageLinksFor(company):
-    wells_fargo_first_results=google_search_results("wellsfargo leadership")[0]
+    wells_fargo_first_results=google_search_results(f"${company} leadership")[0]
     print(wells_fargo_first_results)
     leadership_page_requesr = requests.get(wells_fargo_first_results)
     soup_parser = BeautifulSoup(leadership_page_requesr.text,'html.parser')
