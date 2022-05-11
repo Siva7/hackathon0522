@@ -21,10 +21,18 @@ def getLeaderPageLinksFor(company):
 
 def getTextAboutExec(company):
     leader_page_links=getLeaderPageLinksFor(company)
-    text_and_img_list=list(map(lambda x: get_visible_text_and_images_from_webpages(x), leader_page_links))
-    return text_and_img_list
+    leaderInfoList=list(map(lambda x: get_visible_text_and_images_from_webpages(x), leader_page_links))
+    return leaderInfoList
 
 if __name__ ==  '__main__':
 
-    print(getTextAboutExec("JpMorgan Chase"))
+    # print(getTextAboutExec("JpMorgan Chase"))
+    company="JpMorgan Chase"
+    list_of_leader_info_objects=getTextAboutExec(company)
+    for index, leader_info_object in enumerate(list_of_leader_info_objects):
+        file_name = company+"_eid_"+str(index)+".txt"
+        print(file_name)
+        for image_index,eachImage_content in enumerate(leader_info_object.image_content):
+            img_file_name = company + "_img_"+str(image_index)+"_eid_" + str(index) + "."+leader_info_object.image_extn[image_index]
+            print(img_file_name)
     # print(get_data_from_eah_leader_page("https://www.wellsfargo.com/about/corporate/governance/carr/"))
