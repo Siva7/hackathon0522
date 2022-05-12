@@ -33,3 +33,8 @@ def get_visible_text_and_images_from_webpages(leaderpage):
     imgs_extns = [str(img_url).split(".")[-1] for img_url in img_urls]
     leaderInfo = LeaderInfo(leader_text,imgs_content,imgs_extns)
     return leaderInfo
+
+def get_visible_text_from_webpages(leaderpage):
+    leaderPage = requests.get(leaderpage)
+    leader_text=text_from_html(leaderPage.text)
+    return leader_text
