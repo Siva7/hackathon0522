@@ -35,8 +35,6 @@ def get_list_of_urls_from_collected_cols(url_string):
 
 def get_urls_and_scan_pages(utl_string):
     list_of_urls=get_list_of_urls_from_collected_cols(utl_string)
-    print("list_of_urls")
-    print(list_of_urls)
     return [check_for_diversity_mention_in_page(eachUrl) for eachUrl in list_of_urls]
 
 

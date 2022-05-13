@@ -79,9 +79,10 @@ async def get_company_diversity_info_url_series(data_excel):
 async def get_company_leadership_info_url_series(data_excel):
     series = data_excel["dunsName"].apply(lambda x: str(get_company_and_ref_websites_urls_for_tag(x, " leadership")))
     return series
-async def gather_info_from_web():
+async def gather_info_from_web(start,end):
+
     data_excel = pd.read_excel('D:\IT\Apps\IntelProjects\Hackathon_2022\hackathonMay22\Hackathon_Data_MinorityWomenOwned_2022 v1.xlsx')
-    data_excel = data_excel.loc[:10,:]
+    data_excel = data_excel.loc[start:end,:]
 
     info_series,divesity_series,leadership_series=await asyncio.gather(get_company_info_url_series(data_excel),
                          get_company_diversity_info_url_series(data_excel),
@@ -101,4 +102,5 @@ if __name__ == '__main__':
     # data_excel["company_info_urls"]=data_excel["dunsName"].apply(lambda x:str(get_company_website_urls(x)))
     # data_excel["company_diversity_info_urls"] = data_excel["dunsName"].apply(lambda x: str(get_company_and_ref_websites_urls_for_tag(x," diversity")))
     # data_excel["company_leadership_info_urls"] = data_excel["dunsName"].apply(lambda x: str(get_company_and_ref_websites_urls_for_tag(x, " leadership")))
-    asyncio.run(gather_info_from_web())
+    asyncio.run(gather_info_from_web(0,1))
+
