@@ -6,4 +6,4 @@ RUN pip install -r requirements.txt
 RUN pwd
 COPY . .
 RUN ls -ltr
-ENTRYPOINT ['python' "./Executor.py"]
+ENTRYPOINT ["python","Executor.py"]

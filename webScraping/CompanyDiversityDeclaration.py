@@ -45,7 +45,7 @@ async def get_diversity_info_from_diversity_urls_series(data_excel):
     return data_excel["company_diversity_info_urls"].apply(lambda x: str(get_urls_and_scan_pages(x)))
 
 async def scan_urls_collected():
-    data_excel = pd.read_excel('D:\IT\Apps\IntelProjects\Hackathon_2022\hackathonMay22\Hackathon_Data_MinorityWomenOwned_2022 withcompany_urls.xlsx')
+    data_excel = pd.read_excel('Hackathon_Data_MinorityWomenOwned_2022 withcompany_urls.xlsx')
 
     diversity_info_from_company_url,diversity_info_from_diversity_search=await asyncio.gather(get_diversity_info_from_company_urls_series(data_excel),
                          get_diversity_info_from_diversity_urls_series(data_excel))
@@ -53,7 +53,7 @@ async def scan_urls_collected():
     data_excel["company_diversity_info_urls_diversity_info"] =diversity_info_from_diversity_search
 
 
-    writer = pd.ExcelWriter('D:\IT\Apps\IntelProjects\Hackathon_2022\hackathonMay22\Hackathon_Data_MinorityWomenOwned_2022 withcompany_urls_and_info.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter('Hackathon_Data_MinorityWomenOwned_2022 withcompany_urls_and_info.xlsx', engine='xlsxwriter')
     data_excel.to_excel(writer,index=False)
     writer.save()
 
