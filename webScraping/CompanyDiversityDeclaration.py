@@ -14,13 +14,68 @@ diversity_identifiers = {"national minority supplier development council": "wome
                          "national lbgt chamber of commerce": "lgbtq+",
                          "nglcc": "lgbtq+",
                          "women led": "women",
-                         "racially diverse" : "racial",
+                         "women own": "women",
                          "women diversity": "women",
+                         "women business own": "women",
+                         "racially diverse" : "racial",
                          "lgbt": "lgbtq+",
                          "veteran diversity": "veteran",
                          "veteran employees":"veteran",
                          "veteran led": "veteran",
-                         "women business owners":"women"}
+                         "veteran own": "veteran",
+                         "Asian owned":"Asian",
+                         "Asian led":"Asian",
+                         "Asian diversity":"Asian",
+                         "Indian led":"Asian,Indian",
+                         "Indian owned":"Asian,Indian",
+                         "Indian diversity":"Asian,Indian",
+                         "Chinese led": "Asian,Chinese",
+                         "Chinese owned": "Asian,Chinese",
+                         "Chinese diversity": "Asian,Chinese",
+                         "African American led":"African American",
+                        "African American owned":"African American",
+                         "African American diversity": "African American",
+                        "African led":"African American",
+                        "African owned":"African American",
+                         "African diversity": "African American",
+                         "hispanic owned":"hispanic",
+                        "hispanic led":"hispanic",
+                        "hispanic diversity":"hispanic"
+                         }
+
+diversity_identifiers_for_companies = {}
+
+for key in diversity_identifiers:
+    new_key=key.lower()
+    diversity_identifiers_for_companies[new_key]=diversity_identifiers[key]
+    diversity_identifiers_for_companies[new_key.replace(" ","_")]=diversity_identifiers[key]
+    diversity_identifiers_for_companies[new_key.replace(" ", "-")]=diversity_identifiers[key]
+    diversity_identifiers_for_companies[new_key.replace(" ", "")] = diversity_identifiers[key]
+
+individual_diversity_keys= {
+    "Asian":"asian",
+    "hispanic":"hispanic",
+    "spanish":"hispanic",
+    "latino":"hispanic",
+    "mexico":"hispanic",
+    "mexican":"hispanic",
+    "south american":"hispanic",
+    "lgbt":"lgbtq+",
+    "african":"African American",
+    "Native america": "Native American",
+    "China":"Chinese",
+    "Chinese":"Chinese",
+    "India":"Indian"
+}
+
+individual_diversity_identifiers={}
+
+for key in individual_diversity_keys:
+    new_key=key.lower()
+    individual_diversity_identifiers[new_key]=individual_diversity_keys[key]
+    individual_diversity_identifiers[new_key.replace(" ", "_")]=individual_diversity_keys[key]
+    individual_diversity_identifiers[new_key.replace(" ", "-")]=individual_diversity_keys[key]
+    individual_diversity_identifiers[new_key.replace(" ", "")] = individual_diversity_keys[key]
 
 
 def check_for_diversity_mention_in_page(url):
@@ -59,10 +114,12 @@ async def scan_urls_collected():
 
 
 if __name__ == '__main__':
-    asyncio.run(scan_urls_collected())
-    # # list_of_urls=list(x[0] for x in google_search_results_and_desc("wellsfargo diversity"))
-    # # for each_url in list_of_urls:
-    # #     print(each_url)
-    # #     print(check_for_diversity_mention_in_page(each_url))
+    # asyncio.run(scan_urls_collected())
+    # list_of_urls=list(x[0] for x in google_search_results_and_desc("Grosvenor Building Services, Inc. diversity"))
+    # for each_url in list_of_urls:
+    #     print(each_url)
+    #     print(check_for_diversity_mention_in_page(each_url))
 
     # print(check_for_diversity_mention_in_page("https://www.dnb.com/business-directory/company-profiles.cpy_inc.d3f8766c48e3701560244592f8a542f5.html"))
+    print(individual_diversity_identifiers)
+    print(diversity_identifiers_for_companies)
