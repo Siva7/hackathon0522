@@ -2,6 +2,7 @@ from urllib.parse import urljoin
 
 import requests
 from bs4 import Comment, BeautifulSoup
+import traceback
 
 from dto.transferObjects import LeaderInfo
 
@@ -34,7 +35,14 @@ def get_visible_text_and_images_from_webpages(leaderpage):
     leaderInfo = LeaderInfo(leader_text,imgs_content,imgs_extns)
     return leaderInfo
 
+
 def get_visible_text_from_webpages(leaderpage):
-    leaderPage = requests.get(leaderpage)
-    leader_text=text_from_html(leaderPage.text)
+    leaderPage_req=""
+    try:
+        leaderPage_req = requests.get(leaderpage,timeout=10)
+    except Exception:
+        print(" Exception for request to "+ leaderpage)
+        # traceback.print_exc()
+        return ""
+    leader_text=text_from_html(leaderPage_req.text)
     return leader_text
