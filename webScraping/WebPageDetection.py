@@ -80,9 +80,10 @@ async def get_company_leadership_info_url_series(data_excel):
     series = data_excel["dunsName"].apply(lambda x: str(get_company_and_ref_websites_urls_for_tag(x, " leadership")))
     return series
 async def gather_info_from_web(start,end):
-
+    print(start)
+    print(end)
     data_excel = pd.read_excel('Hackathon_Data_MinorityWomenOwned_2022 v1.xlsx')
-    data_excel = data_excel.loc[int(start):int(end),:]
+    data_excel = data_excel.loc[int(float(start)):int(float(end)),:]
 
     info_series,divesity_series,leadership_series=await asyncio.gather(get_company_info_url_series(data_excel),
                          get_company_diversity_info_url_series(data_excel),
