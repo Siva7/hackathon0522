@@ -82,7 +82,7 @@ async def get_company_leadership_info_url_series(data_excel):
 async def gather_info_from_web(start,end):
 
     data_excel = pd.read_excel('D:\IT\Apps\IntelProjects\Hackathon_2022\hackathonMay22\Hackathon_Data_MinorityWomenOwned_2022 v1.xlsx')
-    data_excel = data_excel.loc[start:end,:]
+    data_excel = data_excel.loc[int(start):int(end),:]
 
     info_series,divesity_series,leadership_series=await asyncio.gather(get_company_info_url_series(data_excel),
                          get_company_diversity_info_url_series(data_excel),
