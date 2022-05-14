@@ -1,11 +1,16 @@
 from urllib.parse import urljoin
 
 import requests
+
 from bs4 import Comment, BeautifulSoup
 import traceback
 
 from dto.transferObjects import LeaderInfo
 
+class counter:
+    google_search_count=0
+    number_of_urls_scanned=0
+    number_of_web_pages_scanned=0
 
 def tag_visible(element):
     if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
@@ -37,6 +42,7 @@ def get_visible_text_and_images_from_webpages(leaderpage):
 
 
 def get_visible_text_from_webpages(leaderpage):
+    counter.number_of_web_pages_scanned+=1
     leaderPage_req=""
     try:
         leaderPage_req = requests.get(leaderpage,timeout=10)

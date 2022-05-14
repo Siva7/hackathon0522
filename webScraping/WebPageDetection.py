@@ -1,9 +1,16 @@
+import math
+
 from webScraping.GoogleSearch import google_search_results, google_search_results_and_desc
 from  cleanco import basename
 import pandas as pd
 import tldextract
 import asyncio
+
+from webScraping.utils import counter
+
+
 def if_url_belongs_to_company(company_name,url_and_desc):
+    counter.number_of_urls_scanned+=1
     url,desc=url_and_desc
     tld_extract = tldextract.extract(url.lower())
     clean_url = tld_extract.subdomain + tld_extract.domain
@@ -25,6 +32,7 @@ def if_url_belongs_to_company(company_name,url_and_desc):
     return False
 
 def if_url_has_company_reference(company_name,url_and_desc):
+    counter.number_of_urls_scanned += 1
     url,desc=url_and_desc
     desc=''.join(char for char in desc if char.isalnum()).lower().replace(" ","")
     company_basename = basename(company_name).lower()
@@ -67,6 +75,27 @@ def get_company_website_urls(company):
     # print(company_url_string+ref_url_string)
     return company_url_string+ref_url_string
 
+def get_listed_leader_linkedin_page(company,leader_name):
+    leader_name=str(leader_name)
+    # print("comapny")
+    # print(company)
+    # print(leader_name)
+    leader_name=leader_name.split("-")[0].strip()
+    search_results_with_desc = google_search_results_and_desc(company+" "+leader_name+" linkedin profile")
+    url=search_results_with_desc[0][0]
+    if "linked" in url:
+        return url
+    else:
+        return ""
+def get_leader_linked_url_from_cols(company,leader_one,leader_two):
+    leader_one_url=""
+    leader_two_url=""
+    company=basename(company)
+    if not (leader_one == "" or str(leader_one)=="nan"):
+        leader_one_url=get_listed_leader_linkedin_page(company,leader_one)
+    if not (leader_two == "" or str(leader_one)=="nan"):
+        leader_two_url=get_listed_leader_linkedin_page(company,leader_two)
+    return ','.join([leader_one_url,leader_two_url])
 
 async def get_company_info_url_series(data_excel):
     series = data_excel["dunsName"].apply(lambda x:str(get_company_website_urls(x)))
@@ -76,9 +105,10 @@ async def get_company_diversity_info_url_series(data_excel):
     series = data_excel["dunsName"].apply(lambda x: str(get_company_and_ref_websites_urls_for_tag(x," diversity")))
     return series
 
-async def get_company_leadership_info_url_series(data_excel):
-    series = data_excel["dunsName"].apply(lambda x: str(get_company_and_ref_websites_urls_for_tag(x, " leadership")))
+async def get_listed_leaders_linked_in_urls(data_excel):
+    series = data_excel.apply(lambda x: str(get_leader_linked_url_from_cols(x.dunsName,x.executiveContact1,x.executiveContact2)),axis=1)
     return series
+
 async def gather_info_from_web(start,end):
     print(start)
     print(end)
@@ -87,10 +117,10 @@ async def gather_info_from_web(start,end):
 
     info_series,divesity_series,leadership_series=await asyncio.gather(get_company_info_url_series(data_excel),
                          get_company_diversity_info_url_series(data_excel),
-                         get_company_leadership_info_url_series(data_excel))
+                         get_listed_leaders_linked_in_urls(data_excel))
     data_excel["company_info_urls"]=info_series
     data_excel["company_diversity_info_urls"] =divesity_series
-    data_excel["company_leadership_info_urls"] = leadership_series
+    data_excel["company_leadership_likedin_urls"] = leadership_series
 
 
     writer = pd.ExcelWriter('Hackathon_Data_MinorityWomenOwned_2022 withcompany_urls.xlsx', engine='xlsxwriter')
