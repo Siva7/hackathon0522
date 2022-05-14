@@ -12,7 +12,8 @@ def execute():
         sys.argv[3],sys.argv[1], sys.argv[2])
 
 if __name__=='__main__':
-    asyncio.run(gather_info_from_web(300, 400))
-    asyncio.run(scan_urls_collected())
-    upload_local_file_to_cloud("DefaultEndpointsProtocol=https;AccountName=webscraptest;AccountKey=4CAwZJ0BIJxFlkje7tAS33sqhnEPTs+RMap3YRcB6FCGhe+vHwcSxFM9So4hfYl9qrlcsv0W/r+h+AStzp8T+Q==;EndpointSuffix=core.windows.net"
-                               ,300,400)
+    execute()
+    # asyncio.run(gather_info_from_web(300, 400))
+    # asyncio.run(scan_urls_collected())
+    # upload_local_file_to_cloud("DefaultEndpointsProtocol=https;AccountName=webscraptest;AccountKey=4CAwZJ0BIJxFlkje7tAS33sqhnEPTs+RMap3YRcB6FCGhe+vHwcSxFM9So4hfYl9qrlcsv0W/r+h+AStzp8T+Q==;EndpointSuffix=core.windows.net"
+    #                            ,300,400)
