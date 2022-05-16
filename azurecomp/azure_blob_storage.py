@@ -1,4 +1,8 @@
 from azure.storage.blob import BlobServiceClient
+import pandas as pd
+import os
+
+
 def upload_string_as_blob(file_name,data):
     service = BlobServiceClient.from_connection_string("DefaultEndpointsProtocol=https;AccountName=acogstorage;AccountKey=A/AqRiqGci9qzqxFB28nW/L8Usi+BEQQyTRZOAuPlxCOdrLaqq5mTqbt/bxBQF4hhsB8kgGLZiY/+AStnKydAw==;EndpointSuffix=core.windows.net")
     container_client=service.get_container_client("datadump")
@@ -18,6 +22,12 @@ def upload_counter_string_as_blob(connectionString,start,stop,data):
     service = BlobServiceClient.from_connection_string(connectionString)
     container_client=service.get_container_client("datadump")
     container_client.upload_blob(name="stats_for_"+str(start)+"_"+str(stop)+".txt",data=data)
+
+
+
+
+
+
 
 
 if __name__ == '__main__':
