@@ -15,7 +15,7 @@ def rmdir(directory):
         directory.rmdir()
 
 def combine_web_scrapping_output_files():
-    conn_string=sys.argsv[1]
+    conn_string=sys.argv[1]
     temp_cache = "temp_cache_for_data_extract_from_azure"
     blob_service_client = BlobServiceClient.from_connection_string(conn_string)
     container_client = blob_service_client.get_container_client("datadump")
